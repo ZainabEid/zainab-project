@@ -97,9 +97,14 @@ class UserController extends Controller
         // check if phone update
         if ($request->phone) {
 
+            $phones_id = $user->phones()->pluck('id');
+
             // assign phones to user
             foreach ($request->phone as $index => $phone) {
-                $user->phones()->update(['phone' => $phone]);
+                $user->phones()->updateOrCreate([
+                    'id' => $phones_id[$index],
+                ],[
+                    'phone' => $phone]);
 
             } // end foreach
         }
