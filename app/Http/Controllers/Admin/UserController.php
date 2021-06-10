@@ -94,6 +94,8 @@ class UserController extends Controller
         $requested_data['photo'] =  ($request->photo) ? $this->handlePhoto('edit', $request->photo) :  $user->photo;
 
 
+      //  $user->syncPhones($request->phone);
+
         // check if phone update
         if ($request->phone) {
 
@@ -101,6 +103,7 @@ class UserController extends Controller
 
             // assign phones to user
             foreach ($request->phone as $index => $phone) {
+                $user->phones()->delete();
                 $user->phones()->updateOrCreate([
                     'id' => $phones_id[$index],
                 ],[
