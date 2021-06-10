@@ -16,7 +16,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        $this->app->register(RepositoryServiceProvider::class);
+
     }
 
     /**
@@ -28,6 +29,6 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Schema::defaultStringLength(125);
-        $this->app->bind(NewsRepositoryInterface::class ,NewsRepository::class);        
+
     }
 }

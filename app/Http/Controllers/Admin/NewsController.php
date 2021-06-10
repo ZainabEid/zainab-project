@@ -6,7 +6,6 @@ use App\Http\Controllers\Controller;
 use App\Models\News;
 use App\Repositories\NewsRepositoryInterface;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class NewsController extends Controller
 {
@@ -41,7 +40,7 @@ class NewsController extends Controller
             'title_ar' => 'required',
             'title_en' => 'required',
             'description' => 'required',
-            'photo' => 'required|image',
+            'photo' => '    |image',
 
         ]);
         $requested_data = $request->except('photo','_token' ,'method');
