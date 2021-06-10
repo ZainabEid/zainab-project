@@ -35,12 +35,12 @@
                 {{-- in edit existing user --}}
                 @foreach ($user->phones->pluck('phone') as $index => $phone)
 
-                    <div class="phone-validation  @error('phone.' . $index) 'has-error' @enderror">
+                    <div class="phone-validation  @error('phone.' . $index.'_error') 'has-error' @enderror">
                         @if ($index == 0)
 
                             {{-- the first required phone --}}
                             {!! Form::text('phone[]', $phone, ['placeholder' => 'Enter user phone', 'class' => 'phone']) !!}
-                            @error('phone.' . $index)
+                            @error('phone.' . $index.'_error')
 
                                 <span class="text-danger">
                                     {{ $message }}
@@ -65,12 +65,12 @@
                 @endforeach
 
             @else
-                <div class="phone-validation @error('phone.0') 'has-error' @enderror">
+                <div class="phone-validation @error('phone.0_error') 'has-error' @enderror">
 
                     {{-- in create new user --}}
                     {!! Form::text('phone[]', null, ['placeholder' => 'Enter user phone', 'class' => 'phone']) !!}
 
-                    @error('phone.0')
+                    @error('phone.0_error')
                     <span class="text-danger">
                         {{ $message }}
                     </span>

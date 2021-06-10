@@ -101,13 +101,15 @@ class UserController extends Controller
 
             $phones_id = $user->phones()->pluck('id');
 
+            $user->phones()->delete();
             // assign phones to user
             foreach ($request->phone as $index => $phone) {
-                $user->phones()->delete();
-                $user->phones()->updateOrCreate([
-                    'id' => $phones_id[$index],
-                ],[
-                    'phone' => $phone]);
+                $user->phones()->create(['phone' => $phone]); 
+
+                // $user->phones()->updateOrCreate([
+                //     'id' => $phones_id[$index],
+                // ],[
+                //     'phone' => $phone]);
 
             } // end foreach
         }
@@ -120,9 +122,7 @@ class UserController extends Controller
 
         $user->update($requested_data) ; // use save not to fill passw with null  
 
-        return response()->json([
-            'user' => $user,
-        ]);
+        return view('admin.dashboard.users._user_row' , compact('user'));
 
     } // end of update
 

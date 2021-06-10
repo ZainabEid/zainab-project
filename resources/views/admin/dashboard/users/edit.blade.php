@@ -1,4 +1,4 @@
-{!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'id' => 'update-user-form', 'data-url' => route('admin.users.update', $user->id), 'role' => 'form', 'files' => true, 'method' => 'post']) !!}
+{!! Form::model($user, ['route' => ['admin.users.update', $user->id], 'id' => 'update-user-form', 'data-url' => route('admin.users.update', $user->id), 'data-user-id' => $user->id , 'role' => 'form', 'files' => true, 'method' => 'post']) !!}
 
 @include('admin.dashboard.users._user_form')
 

@@ -121,6 +121,7 @@ $(document).ready(function () {
         e.preventDefault();
 
         var url = $('#update-user-form').data('url');
+        var user_id = $('#update-user-form').data('user-id')
 
         var form = $('#update-user-form')[0];
         var form_data = new FormData(form);
@@ -144,33 +145,28 @@ $(document).ready(function () {
             data: form_data,
             processData: false,
             contentType: false,
-            success: function (data) {
+            success: function (updated_row) {
 
 
                 //close the modal
                 $('#popup-modal').modal('toggle');
                 $('.modal-content').empty();
 
+                console.log(  $("#user" + user_id  ).html())
 
-                // // in phones we need a loop to inter phones
-                $('#user' + data.user.id + ' td:nth-child(2)').text(data.user.name);
-                $('#user' + data.user.id + ' td:nth-child(3)').text(data.user.email);
-                $('#user' + data.user.id + ' td:nth-child(4)').text(data.user.password);
-                $('#user' + data.user.id + ' td:nth-child(5)').text(data.user.phone);
-                $('#user' + data.user.id + ' td:nth-child(6)').text(data.user.photo);
+                  $("#user" + user_id  ).replaceWith(updated_row);
+
 
             },
-            error: function (response) {
+            error: function (reject) {
 
-                var error = response.responseJSON.errors;
-
-                // error.name ? $('#nameError').text(error.name) : null;
-                // error.email ? $('#emailError').text(error.email) : null;
-                // error.password ? $('#passwordError').text(error.password) : null;
-
-                // console.log(error.phone); // is undefined
-                // error.phone ? $('#phoneError').text(error.phone) : null;
-                // error.photo ? $('#photoError').text(error.photo) : null;
+                if (reject.status === 422) {
+                    var errors = reject.responseJSON.errors;
+                    $.each(errors, function (key, val) {
+                        $("#" + key + "_error").text(val[0]);
+                        console.log(  key + "_error"+ " : "+ val[0]);
+                    });
+                }
             }
 
         });

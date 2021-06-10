@@ -31,5 +31,19 @@ class NewsRepository extends BaseRepository implements NewsRepositoryInterface
         return $admin->news()->create($data);
     }
 
+    // update record in the database
+    public function update(array $data, $id)
+    {
+        $record = $this->news->find($id)->first();
+        return $record->update($data);
+    }
+
+    // remove record from the database
+    public function delete($id)
+    {
+        $record = $this->news->find($id)->first();
+        return $record->delete();
+    }
+
   
 }
