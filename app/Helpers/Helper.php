@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 if (!function_exists('get_models')) {
     function get_models()
     {
-       $models =  ['admins', 'categories' ]  ;
+       $models =  ['admins', 'categories' ,'users' , 'products']  ;
 
         return $models;
     } //end of get_models helper
@@ -31,10 +31,9 @@ if (!function_exists('crud_maps')) {
 if (!function_exists('save_image')) {
     function save_image($folder, $image)
     {
-        $image->store('uploads/' . $folder . '/' ,'public');
+        $image_name = $image->store('uploads/' . $folder . '/' ,'public');
 
-       // image->store('uploads','public');
-        return $image;
+        return $image_name;
     } //end of save_image helper
     
 } // end of check exist
@@ -60,10 +59,9 @@ if (!function_exists('delete_image')) {
     {
 
         if( $image_name != 'default.png'){
-            if ( Storage::disk('local')->has('storage/uploads/'.$folder.'/'.$image_name)) {
-            
-                Storage::disk('local')->delete('storage/uploads/'.$folder.'/'.$image_name);
-             
+            if ( Storage::disk('public')->exists('uploads/'.$folder.'/'.$image_name)) {
+                Storage::disk('public')->delete('uploads/'.$folder.'/'.$image_name);
+                
             }
         }
       

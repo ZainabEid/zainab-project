@@ -70,6 +70,16 @@
           </div>
         </div>
 
+        <!-- Sidebar products -->
+        <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+          <div class="image">
+            <i class="far fa-circle nav-icon"></i>
+          </div>
+          <div class="info">
+            <a href="{{ route('admin.products.index') }}" class="d-block">{{ __('site.products') }}</a>
+          </div>
+        </div>
+
 
 
 

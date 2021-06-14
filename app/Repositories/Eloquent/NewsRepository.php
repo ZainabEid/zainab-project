@@ -14,6 +14,7 @@ class NewsRepository extends BaseRepository implements NewsRepositoryInterface
     public function __construct(News $news)
     {
         $this->news = $news;
+        
     }
 
      // Get all instances of model

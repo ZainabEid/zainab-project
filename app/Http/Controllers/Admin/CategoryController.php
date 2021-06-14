@@ -74,7 +74,7 @@ class CategoryController extends Controller
             $requested_data['photo'] = $request->photo->hashName();
         }
 
-        $category->update($requested_data);
+        $category->update($requested_data); 
         // session()->flash('success', __('site.updated-successfuly'));
         return redirect()->route('admin.categories.index');
     }

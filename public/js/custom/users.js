@@ -6,7 +6,7 @@ $(document).ready(function () {
     $('body').on('click', '#add-phone', function (e) {
         e.preventDefault();
 
-        var url =  $(this).data('url');
+        var url = $(this).data('url');
 
         $.ajax({
             type: "get",
@@ -94,18 +94,7 @@ $(document).ready(function () {
             },
             error: function (reject) {
 
-                // var error = response.responseJSON.errors;
-                // console.log(reject.responseJSON.errors);
-
-                if (reject.status === 422) {
-                    var errors = reject.responseJSON.errors;
-                    $.each(errors, function (key, val) {
-                        $("#" + key + "_error").text(val[0]);
-                        console.log(  key + "_error"+ " : "+ val[0]);
-                    });
-                }
-
-
+                handlingValidationErrors(reject)
 
             }
 
@@ -152,21 +141,13 @@ $(document).ready(function () {
                 $('#popup-modal').modal('toggle');
                 $('.modal-content').empty();
 
-                console.log(  $("#user" + user_id  ).html())
 
-                  $("#user" + user_id  ).replaceWith(updated_row);
+                $("#user" + user_id).replaceWith(updated_row);
 
 
             },
             error: function (reject) {
-
-                if (reject.status === 422) {
-                    var errors = reject.responseJSON.errors;
-                    $.each(errors, function (key, val) {
-                        $("#" + key + "_error").text(val[0]);
-                        console.log(  key + "_error"+ " : "+ val[0]);
-                    });
-                }
+                handlingValidationErrors(reject)
             }
 
         });
@@ -223,4 +204,22 @@ $(document).ready(function () {
     });
 
 });// end of document ready
+
+function handlingValidationErrors (reject){
+    
+    if (reject.status === 422) {
+        var errors = reject.responseJSON.errors;
+        $.each(errors, function (key, val) {
+
+            // if key contains . put // before it
+            console.log(key);
+            key.replace(/./g, '//.');
+            console.log(key);
+
+
+            $("#" + key + "_error").text(val[0]);
+            console.log($("#" + key + "_error"));
+        });
+    }
+}
 

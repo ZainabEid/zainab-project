@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Livewire\Admin\Dashboard\Products\Product;
 use Illuminate\Support\Facades\Route;
 
 // Dashboard
@@ -46,10 +47,17 @@ Route:: resource('admins','AdminController');
 
 ## users routes
 Route:: resource('users','UserController')->except('show');
+
 Route::get('users/addphone', function () {
     return view('admin.dashboard.users._extra_phone');
 });
+
 Route::get('users/addPhone', 'UserController@addPhone')->name('users.addPhone');
 
 ## news routes
 Route:: resource('news','NewsController');
+
+// ## products routes
+// Route:: resource('products','ProductController');
+// Route:: get('/products', Product::class);
+

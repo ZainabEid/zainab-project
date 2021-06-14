@@ -12,7 +12,7 @@ class BaseRepository implements EloquentRepositoryInterface
 
     // Constructor to bind model to repo
     public function __construct(Model $model)
-    {
+    { // set model
         $this->model = $model;
     }
 

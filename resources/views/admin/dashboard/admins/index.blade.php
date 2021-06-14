@@ -66,7 +66,7 @@
 
                             @else
                                 <tr>
-                                    <p> there is not data</p>
+                                    <td colspan="7"><p> there is not data</p></td>
                                 </tr>
 
                             @endif

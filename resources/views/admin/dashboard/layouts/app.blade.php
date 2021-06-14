@@ -29,6 +29,7 @@
     <link rel="stylesheet" href="{{ asset('plugins/summernote/summernote-bs4.css') }}">
     <!-- Google Font: Source Sans Pro -->
     <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
+    @livewireStyles
 </head>
 
 <body dir="{{ Lang::locale() == 'ar' ? 'rtl' : '' }}" class="hold-transition sidebar-mini layout-fixed">
@@ -103,6 +104,20 @@
 
     {{-- custom js --}}
     <script src="{{ asset('js/custom/users.js') }}"></script>
+
+    @livewireScripts
+
+   
+    <script>
+        window.addEventListener('close-modal', event => {
+            // $('#product-modal').modal('dispose')
+            $('#product-modal').modal('toggle')
+            // $('#product-modal').modal('hide')
+        })
+        window.addEventListener('open-modal', event => {
+            $('#product-modal').modal('show')
+        })
+    </script>
 </body>
 
 </html>
