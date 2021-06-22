@@ -1,5 +1,5 @@
 <div>
-    <tr >
+    <tr>
         <td ><span>{{ isset($table_index) ? $table_index + 1 : '' }}.</span></td>
         <td >{{ $product->name ?? '' }}</td>
         <td > {{ $product->description ?? '' }}</td>

@@ -1,4 +1,14 @@
 <div class="form-group">
+    <select wire:model='category_id' class="form-select" aria-label="select example" >
+        <option selected value="{{ null }}"> <label for="category_id" class="boldfont">Choose Category</label></option>
+        @foreach ($categories as $category)
+            <option value="{{ $category->id }}">{{ $category->name }}</option>
+        @endforeach
+      </select>
+    @error('category_id') <span class="text-danger">{{ $message }}</span> @enderror
+</div>
+
+<div class="form-group">
     <label for="name_ar" class="boldfont">name-ar</label>
     <input wire:model.prevent="name_ar" type="text" >
     @error('name_ar') <span class="text-danger">{{ $message }}</span> @enderror

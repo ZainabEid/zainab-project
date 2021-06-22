@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Dashboard\Products;
 
+use App\Models\Category;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -12,7 +13,9 @@ class EditProduct extends Component
     use WithFileUploads;
 
     public $product;
+    public $categories;
 
+    public $category_id;
     public $name_ar;
     public $name_en;
     public $description_ar;
@@ -21,6 +24,7 @@ class EditProduct extends Component
     public $photo;
 
     protected $rules = [
+        'category_id' => 'required',
         'name_ar' => 'required',
         'name_en' => 'required',
         'description_ar' => 'required',
@@ -35,6 +39,7 @@ class EditProduct extends Component
     {
         $this->product = $product;
 
+        $this->category_id = $product->category_id;
         $this->name_ar = $product->name_ar;
         $this->name_en = $product->name_en;
         $this->description_ar = $product->description_ar;
@@ -48,6 +53,7 @@ class EditProduct extends Component
         $this->validate();
 
         $data = [
+            'category_id' => $this->category_id,
             'name_ar' => $this->name_ar,
             'name_en' => $this->name_en,
             'description_ar' => $this->description_ar,
@@ -70,6 +76,7 @@ class EditProduct extends Component
 
     public function cleanVars()
     {
+        $this->category_id = null;
         $this->name_ar = null;
         $this->name_en = null;
         $this->description_ar = null;
@@ -79,6 +86,7 @@ class EditProduct extends Component
     }
     public function render()
     {
+        $this->categories = Category::all();
         return view('livewire.admin.dashboard.products.edit-product');
     }
 }

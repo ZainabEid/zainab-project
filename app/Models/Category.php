@@ -16,7 +16,7 @@ class Category extends Model
     ];
 
     protected $appends =[
-        'name', 'photo_path'
+        'name'
     ];
 
     public function getNameAttribute()
@@ -27,11 +27,12 @@ class Category extends Model
         return $this->en_name;
     }// end get name attribute
 
-    public function getPhotoPathAttribute()
+   
+    ####### Relations ##########
+    public function products()
     {
-        return Storage::disk('local')->get('uploads/' . $this->photo);
-
-    }// end of get photo path attribute
+        return $this->hasMany(Product::class);
+    }
 
 
 

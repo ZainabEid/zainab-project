@@ -24,10 +24,17 @@ class RedirectIfNotAdmin
             return $next($request);
         }
 
-        $redirectToRoute = $request->expectsJson() ? '' : route('admin.login');
+        
+        if(! $request->expectsJson()){
+
+            if ($request->is('admin') || $request->is('admin/*') ) {
+                return route('admin.login');
+            }
+        }
+
 
         throw new AuthenticationException(
-            'Unauthenticated.', [$guard], $redirectToRoute
+            'Unauthenticated.', [$guard], route('admin.login')
         );
     }
 

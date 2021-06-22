@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin\Dashboard\Products;
 
+use App\Models\Category;
 use App\Models\Product;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -11,7 +12,9 @@ class CreateProduct extends Component
 
     use WithFileUploads;
 
+    public $categories;
    
+    public $category_id;
     public $name_ar;
     public $name_en;
     public $description_ar;
@@ -21,6 +24,7 @@ class CreateProduct extends Component
 
 
     protected $rules = [
+        'category_id' => 'required',
         'name_ar' => 'required',
         'name_en' => 'required',
         'description_ar' => 'required',
@@ -33,8 +37,8 @@ class CreateProduct extends Component
     public function store()
     {
         $this->validate();
-
         $data = [
+            'category_id' => $this->category_id,
             'name_ar' => $this->name_ar,
             'name_en' => $this->name_en,
             'description_ar' => $this->description_ar,
@@ -59,6 +63,7 @@ class CreateProduct extends Component
 
     public function cleanVars()
     {
+        $this->category_id = null;
         $this->name_ar = null;
         $this->name_en = null;
         $this->description_ar = null;
@@ -68,6 +73,7 @@ class CreateProduct extends Component
     }
     public function render()
     {
+        $this->categories = Category::all();
         return view('livewire.admin.dashboard.products.create-product');
     }
 }

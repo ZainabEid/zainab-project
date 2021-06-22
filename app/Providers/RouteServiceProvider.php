@@ -17,7 +17,7 @@ class RouteServiceProvider extends ServiceProvider
      *
      * @var string
      */
-    public const HOME = '/home';
+    public const HOME = '/';
 
     /**
      * The controller namespace for the application.
@@ -27,6 +27,8 @@ class RouteServiceProvider extends ServiceProvider
      * @var string|null
      */
     protected $namespace = 'App\\Http\\Controllers';
+    protected $admin_namespace = 'App\\Http\\Controllers\\Admin';
+    protected $site_namespace = 'App\\Http\\Controllers\Site';
 
     /**
      * Define your route model bindings, pattern filters, etc.
@@ -43,16 +45,26 @@ class RouteServiceProvider extends ServiceProvider
                 ->namespace($this->namespace)
                 ->group(base_path('routes/api.php'));
 
+                // guest home routes
             Route::middleware('web')
                 ->namespace($this->namespace)
                 ->group(base_path('routes/web.php'));
 
+                // user routes
+            Route::prefix('site')
+                ->as('site.')
+                ->middleware('web')
+                ->namespace($this->site_namespace)
+                ->group(base_path('routes/site.php'));
+
+                // admin routes
             Route::prefix('admin')
                 ->as('admin.')
-                ->middleware('web')
+                ->middleware('admin.auth:admin')
                 ->namespace('App\Http\Controllers\Admin')
                 ->group(base_path('routes/admin.php'));
             
+                // livewire routes
             Route::middleware('web')
                 ->prefix('admin')
                 ->as('admin.')

@@ -39,5 +39,15 @@ class User extends Authenticatable
     {
         return $this->hasMany(Phone::class);
     }// end phones 
+   
+    public function products()
+    {
+        return $this->belongsToMany(Product::class)->withPivot('quantity');
+    }// end products 
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }// end of orders
 
 }// end of user model

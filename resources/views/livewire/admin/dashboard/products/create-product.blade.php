@@ -14,7 +14,7 @@
         <div class="modal-body">
             
             @include('admin.dashboard.products._form')
-
+            
         </div>
            
         <div class="modal-footer">

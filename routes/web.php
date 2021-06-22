@@ -13,10 +13,16 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Auth::routes();
 
 
-Route::get('/', 'Admin\DashboardController@index' )->name('dashboard');
+Route::get('/', 'Site\SiteController@index' )->name('home');
+
+Route::get('/admin', 'Admin\DashboardController@index' )->name('dashboard');
 Route::get('/{lang}', 'Admin\DashboardController@changeLanguage' )->name('change-lang');
 
 
         
+
+
+// Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

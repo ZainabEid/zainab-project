@@ -89,3 +89,6 @@ funciton isImageUploaded(image){
     - sweet ajax
 
 ## chrome extention : fill this to auto fill the form
+
+
+## https://github.com/hardevine/LaravelShoppingcart cart package
