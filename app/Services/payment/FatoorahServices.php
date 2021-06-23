@@ -2,7 +2,7 @@
 
 namespace App\Services\Payment;
 
-use App\Services\Payment\contract\PaymentInterface;
+use App\Services\Payment\Contract\PaymentInterface;
 use Illuminate\Http\Request;
 
 class FatoorahServices implements PaymentInterface
@@ -14,7 +14,7 @@ class FatoorahServices implements PaymentInterface
     public function __construct()
     {
         // fatoorah api configrations
-        $this->apiURL = config('app.API_URL');
+        $this->apiURL = 'ARVtcZetyA8oRfMQm_Da4gt7LBa33cHSUFSkHKnhQlmQOZhgR-Jqrc7AEikRGzP99I3rz_PzsAn4OUIK';
         $this->apiKey = config('app.API_KEY');
     }
 
@@ -62,8 +62,8 @@ class FatoorahServices implements PaymentInterface
         $PaymentMethodId,
         $InvoiceValue,
         $CallBackUrl = "route('site.payment.CallBack')",
-        $ErrorUrl = "route('site.payment.CallBack')"
-    ) {
+        $ErrorUrl = "route('site.payment.CallBack')") 
+    {
 
         $postFields = [
             //Fill required data

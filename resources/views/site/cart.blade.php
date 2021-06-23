@@ -47,11 +47,14 @@
                     </td>
                     <td>
                         @if ($total > 0)
-                            <a href="{{ route('site.payment.invoice-link') }}" class="btn btn-warning"> Get Invoice Link <i class="fa fa-angle-right"></i></a>
+                            <a href="{{ route('site.payment.paypal.getToken') }}">get Token</a>
+                            <a href="{{ route('site.payment.paypal.captureAuthorizedPayment') }}">Capture Authorized Payment</a>
+                            {{-- <a href="{{ route('site.payment.invoice-link') }}" class="btn btn-warning"> Get Invoice Link <i class="fa fa-angle-right"></i></a>
                             or
                             <a href="{{ route('site.payment.checkout') }}" class="btn btn-warning"> Proceed to Checkout <i class="fa fa-angle-right"></i></a>
                             or
-                             <a href="{{ route('site.make.payment') }}" class="btn btn-primary mt-3">Pay $224 via Paypal</a>
+                            <div id="paypal-button"></div> --}}
+                           
                         @endif
                     </td>
                 </tr>

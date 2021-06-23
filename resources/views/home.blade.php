@@ -15,6 +15,9 @@
                     @endif
 
                     {{ __('You are logged in!') }}
+
+                    <div id="paypal-button"></div>
+
                 </div>
             </div>
         </div>

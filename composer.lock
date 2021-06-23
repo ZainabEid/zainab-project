@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "253c4e8b051674b31ccb0ee0a730778a",
+    "content-hash": "fc6c8134f612db641edfca60e5a3584e",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -2664,70 +2664,6 @@
             "time": "2021-03-22T18:38:29+00:00"
         },
         {
-            "name": "srmklive/paypal",
-            "version": "3.0.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/srmklive/laravel-paypal.git",
-                "reference": "0aefc864b351770f9e82b2fc88d8aa6c87de3c87"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/srmklive/laravel-paypal/zipball/0aefc864b351770f9e82b2fc88d8aa6c87de3c87",
-                "reference": "0aefc864b351770f9e82b2fc88d8aa6c87de3c87",
-                "shasum": ""
-            },
-            "require": {
-                "guzzlehttp/guzzle": "~7.0",
-                "illuminate/support": "~6.0|~7.0|~8.0",
-                "nesbot/carbon": "~2.0",
-                "php": ">=7.2|^8.0"
-            },
-            "require-dev": {
-                "phpunit/phpunit": "^8.0|^9.0",
-                "symfony/var-dumper": "~5.0"
-            },
-            "type": "library",
-            "extra": {
-                "laravel": {
-                    "providers": [
-                        "Srmklive\\PayPal\\Providers\\PayPalServiceProvider"
-                    ],
-                    "aliases": {
-                        "PayPal": "Srmklive\\PayPal\\Facades\\PayPal"
-                    }
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Srmklive\\PayPal\\": "src/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Raza Mehdi",
-                    "email": "srmk@outlook.com"
-                }
-            ],
-            "description": "Laravel plugin For Processing Payments Through Paypal Express Checkout. Can Be Used Independently With Other Applications.",
-            "keywords": [
-                "http",
-                "laravel paypal",
-                "paypal",
-                "rest",
-                "web service"
-            ],
-            "support": {
-                "issues": "https://github.com/srmklive/laravel-paypal/issues",
-                "source": "https://github.com/srmklive/laravel-paypal/tree/3.0.3"
-            },
-            "time": "2021-03-02T09:52:07+00:00"
-        },
-        {
             "name": "swiftmailer/swiftmailer",
             "version": "v6.2.7",
             "source": {
@@ -5236,6 +5172,67 @@
                 "source": "https://github.com/webmozarts/assert/tree/1.10.0"
             },
             "time": "2021-03-09T10:59:23+00:00"
+        },
+        {
+            "name": "webpatser/laravel-uuid",
+            "version": "3.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/webpatser/laravel-uuid.git",
+                "reference": "bde126250b99773481c4d20d80f02948ab3b61db"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/webpatser/laravel-uuid/zipball/bde126250b99773481c4d20d80f02948ab3b61db",
+                "reference": "bde126250b99773481c4d20d80f02948ab3b61db",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.0"
+            },
+            "require-dev": {
+                "fzaninotto/faker": "~1.4",
+                "phpunit/phpunit": "~6.0"
+            },
+            "suggest": {
+                "paragonie/random_compat": "A random_bytes Php 5.x polyfill."
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Webpatser\\Uuid\\UuidServiceProvider"
+                    ],
+                    "aliases": {
+                        "Uuid": "Webpatser\\Uuid\\Uuid"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Webpatser\\Uuid": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Christoph Kempen",
+                    "email": "christoph@downsized.nl"
+                }
+            ],
+            "description": "Class to generate a UUID according to the RFC 4122 standard. Support for version 1, 3, 4 and 5 UUID are built-in.",
+            "homepage": "https://github.com/webpatser/uuid",
+            "keywords": [
+                "UUID RFC4122"
+            ],
+            "support": {
+                "issues": "https://github.com/webpatser/uuid/issues",
+                "source": "https://github.com/webpatser/uuid"
+            },
+            "time": "2017-09-03T23:16:49+00:00"
         }
     ],
     "packages-dev": [

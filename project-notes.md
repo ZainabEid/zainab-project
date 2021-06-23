@@ -92,3 +92,16 @@ funciton isImageUploaded(image){
 
 
 ## https://github.com/hardevine/LaravelShoppingcart cart package
+
+
+## payment integraiton with paypal:
+- useing srmklive/paypal : https://www.codecheef.org/article/how-to-integrate-paypal-payment-gateway-in-laravel
+- using omniPay : https://artisansweb.net/paypal-payment-gateway-integration-in-laravel/
+- using paypal/rest-api-php-sdk : https://www.youtube.com/watch?v=unKGoA2r00c 
+- using paypal smart buttons :https://www.youtube.com/watch?v=UEJHSPM-Qiw
+- using paypal servier side sdk integrations : https://www.youtube.com/watch?v=LlkJvoybDoU
+- 
+
+## HTTP/Client
+- video : https://www.youtube.com/watch?v=6PZg6ht8yyc
+- documtation : https://laravel.com/docs/8.x/http-client

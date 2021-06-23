@@ -15,23 +15,18 @@ Route::get('/cart/change-quantity/{product}', 'CartController@changeQuantity')->
 Route::get('/cart/clear-cart', 'CartController@clear')->name('cart.clear');
 Route::get('/cart/removeItem/{product_id}', 'CartController@removeItem')->name('cart.removeItem');
 
-// payment handling
-Route::post('/payment/pay','PaymentController@pay')->name('payment.pay');
-Route::get('/payment/checkout','PaymentController@checkout')->name('payment.checkout');
-Route::get('/payment/invoice-link','PaymentController@invoiceLink')->name('payment.invoice-link');
-Route::get('/payment/returnback/success','PaymentController@returnbackSuccess')->name('payment.returnback.success');
-Route::get('/payment/returnback/error','PaymentController@returnbackError')->name('payment.returnback.error');
+// handling payments with paypal
+Route::get('/payment/paypal/getToken', 'PayPalPaymentController@getToken')->name('payment.paypal.getToken');
+Route::get('/payment/paypal/captureAuthorizedPayment', 'PayPalPaymentController@captureAuthorizedPayment')->name('payment.paypal.captureAuthorizedPayment');
 
 
-Route::get('handle-payment', 'PayPalPaymentController@handlePayment')->name('make.payment');
-Route::get('cancel-payment', 'PayPalPaymentController@paymentCancel')->name('cancel.payment');
-Route::get('payment-success', 'PayPalPaymentController@paymentSuccess')->name('success.payment');
+// // myFatoorah payment handling
+// Route::post('/payment/pay','PaymentController@pay')->name('payment.pay');
+// Route::get('/payment/checkout','PaymentController@checkout')->name('payment.checkout');
+// Route::get('/payment/invoice-link','PaymentController@invoiceLink')->name('payment.invoice-link');
+// Route::get('/payment/returnback/success','PaymentController@returnbackSuccess')->name('payment.returnback.success');
+// Route::get('/payment/returnback/error','PaymentController@returnbackError')->name('payment.returnback.error');
 
-// // Login
-// Route::get('login', 'Auth\LoginController@showLoginForm')->name('login');
-// Route::post('login', 'Auth\LoginController@login');
-// Route::post('logout', 'Auth\LoginController@logout')->name('logout');
 
-// // Register
-// Route::get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-// Route::post('register', 'Auth\RegisterController@register');
+
+

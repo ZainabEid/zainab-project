@@ -73,6 +73,30 @@ $(document).ready(function () {
     })//end of product-quentity
 
 
+    // paypal smart button
+    paypal.Buttons({
+        style:{
+            color:'blue',
+            shape:'pill'      
+        },
+        createOrder: function(data,actions){ //setup  transaction 
+            return actions.order.create({
+                purchase_units:[{
+                    amount:{
+                        valus: '0.1'
+                    }
+                }]
+            });
+        },
+        onApprove:function (data,actions) {  // capture the transaction
+            return actions.order.capture().then(function (details) {  
+                return console.log(details);
+            });
+        }
+
+    }).render('#paypal-button');
+    
+
 });
 
 
@@ -88,4 +112,7 @@ function calculating_total() {
 
     $('.total-price').html(total_price);
     $('.total_items').html(total_items + ' items');
+
+
+
 }

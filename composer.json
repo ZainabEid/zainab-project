@@ -16,7 +16,7 @@
         "laravelcollective/html": "^6.2",
         "livewire/livewire": "^2.4",
         "spatie/laravel-permission": "^4.0",
-        "srmklive/paypal": "^3.0"
+        "webpatser/laravel-uuid": "3.0"
     },
     "require-dev": {
         "facade/ignition": "^2.5",

@@ -50,4 +50,9 @@ class User extends Authenticatable
         return $this->hasMany(Order::class);
     }// end of orders
 
+    public function payments()
+    {
+        return $this->hasMany(Payment::class);
+    }// end of payments
+
 }// end of user model

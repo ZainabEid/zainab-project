@@ -17,6 +17,9 @@ Auth::routes();
 
 
 Route::get('/', 'Site\SiteController@index' )->name('home');
+Route::get('/test', function(){
+    return view('home');
+} )->name('test');
 
 Route::get('/admin', 'Admin\DashboardController@index' )->name('dashboard');
 Route::get('/{lang}', 'Admin\DashboardController@changeLanguage' )->name('change-lang');
