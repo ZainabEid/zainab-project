@@ -37,12 +37,11 @@ class FatoorahServices implements PaymentInterface
     }
 
     function calculatetotal($products){
-        return session()->get('toatl_price');
-    }
+        return session()->get('total_price');
+    }// end of calculate total
 
     public  function pay($products,$success_url,$error_url)
     {
-
         $total = $this->calculatetotal($products);
 
         $postFields = [
@@ -56,7 +55,6 @@ class FatoorahServices implements PaymentInterface
 
         //Call endpoint
         $data = $this->executePayment($this->apiURL, $this->apiKey, $postFields);
-
 
         return $data->PaymentURL; // returns url to pay
     } // end of pay
@@ -163,6 +161,7 @@ class FatoorahServices implements PaymentInterface
     {
 
         $json = $this->callAPI("$apiURL/v2/ExecutePayment", $apiKey, $postFields);
+       
         return $json->Data;
     }
 
@@ -200,8 +199,11 @@ class FatoorahServices implements PaymentInterface
         $curlErr  = curl_error($curl);
 
         curl_close($curl);
+     
+
 
         if ($curlErr) {
+            
             //Curl is not working in your server
             die("Curl Error: $curlErr");
         }

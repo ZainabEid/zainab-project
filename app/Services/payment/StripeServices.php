@@ -41,7 +41,7 @@ class StripeServices implements PaymentInterface
         $stripe_cusotmer = $user->createOrGetStripeCustomer ();
 
         // create payment method
-            
+
         $payment_method = $this->stripe->paymentMethods->create([
             'type' => 'card',
             'card' => [
@@ -101,31 +101,31 @@ class StripeServices implements PaymentInterface
 
     public function checkout($products,$success_url,$error_url)
     {
-
         // find or create products to stripe
         // get array of product_prices and quantities [product_price_id => quantity]
 
-        
-
-        
         $user = User::find(Auth::id());
+        try{
+            $checkout = $user->checkout(
+                [
+                    'price_1J6DyPIVdWaeh4NoUZeiByjX',
+                    'price_1J6Xg3IVdWaeh4NokmGho38P'
+                ],
+                [
+                    'success_url' => $success_url,
+                    'cancel_url' => $error_url,
+                ]
+            );
 
-        
+        }catch(Exception $e){
+            throw $e;
+        }
+       
+    //   $checkout +='<script src="https://js.stripe.com/v3/"></script>';
 
-        $checkout = $user->checkout(
-            [
-                ['price_1J6DyPIVdWaeh4NoUZeiByjX' => 12],
-                'price_1J6Xg3IVdWaeh4NokmGho38P'
-            ],
-            [
-            'success_url' => $success_url,
-            'cancel_url' => $error_url,
-            ]
-        );
-
+    //   dd($checkout);
        
         return  $checkout;
-
     }
 
     /***********************************/

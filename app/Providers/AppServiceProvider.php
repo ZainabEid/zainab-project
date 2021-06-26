@@ -20,8 +20,8 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         $this->app->register(RepositoryServiceProvider::class);
-        // $this->app->bind(PaymentInterface::class , StripeServices::class);
-        $this->app->bind(PaymentInterface::class , FatoorahServices::class);
+        $this->app->bind(PaymentInterface::class , StripeServices::class);
+        // $this->app->bind(PaymentInterface::class , FatoorahServices::class);
     }
 
     /**

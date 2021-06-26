@@ -40,13 +40,13 @@ class PaymentController extends Controller
         $InvoiceURL = $this->payment->getInvoiceLink( session()->get('total_price'));
 
         return view('site.payment.invoice-link', compact('InvoiceURL'));
-    } // end of  check out
+    } // end of  invoiceLink
 
 
     public function pay()
     {
         $products = session('cart');
-
+        
         $this->paymentLink = $this->payment->pay($products ,route('site.payment.returnback.success'),route('site.payment.returnback.error'));
 
         // save payment link in db
@@ -56,6 +56,7 @@ class PaymentController extends Controller
         ]);
 
         session()->put('order_id', $order->id );
+        // dd(filter_var($this->paymentLink, FILTER_VALIDATE_URL));
 
         return view('site.payment.pay', ['paymentLink' =>  $this->paymentLink]);
     }// end of pay
@@ -87,7 +88,7 @@ class PaymentController extends Controller
         // save order to db
         $user = User::findOrFail(Auth::id());
 
-        $user->orders()->where('order_id',  session('order_id') )->update([ // need to use order_id instead of invoice id
+        $user->orders()->where('order_id',  session('order_id') )->update([ 
             'isPaid' => false,
         ]);
 

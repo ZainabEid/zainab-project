@@ -52,8 +52,8 @@
                             {{-- <a href="{{ route('site.payment.paypal.captureAuthorizedPayment') }}">Capture Authorized Payment</a> --}}
                             <a href="{{ route('site.payment.invoice-link') }}" class="btn btn-warning"> Get Invoice Link <i class="fa fa-angle-right"></i></a>
                             or
-                            <a href="{{ route('site.payment.checkout') }}" class="btn btn-warning"> Proceed to Checkout <i class="fa fa-angle-right"></i></a>
-                            or
+                            <a href="{{ route('site.payment.pay') }}" class="btn btn-warning"> Proceed to pay <i class="fa fa-angle-right"></i></a>
+                            {{-- or --}}
                             {{-- <div id="paypal-button"></div> --}}
                            
                         @endif

@@ -13,8 +13,15 @@
 				<div class="entry-content">
 					<div class="">
 						<h4>Payment Link</h4>						
-						<div>								
-                            "Click on <a href='{{ $paymentLink }}' target='_blank'>{{ $paymentLink }}</a>."
+						<div>		
+							@if (filter_var($paymentLink, FILTER_VALIDATE_URL))
+								Click on <a href='{{ $paymentLink }}' target='_blank'>{{ $paymentLink }}</a>.
+							@else
+								Click on  {!!  $paymentLink  !!}
+							@endif
+							
+						
+							
 						</div>
 					</div>
 				</div>
@@ -26,4 +33,8 @@
 			<!-- #primary -->
 		</div>
 		<!-- #content -->
+		@push('scripts')
+		<script  type="text/javascript"> src="https://js.stripe.com/v3/"></script>
+			
+		@endpush
 @endsection
