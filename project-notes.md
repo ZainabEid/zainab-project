@@ -100,8 +100,31 @@ funciton isImageUploaded(image){
 - using paypal/rest-api-php-sdk : https://www.youtube.com/watch?v=unKGoA2r00c 
 - using paypal smart buttons :https://www.youtube.com/watch?v=UEJHSPM-Qiw
 - using paypal servier side sdk integrations : https://www.youtube.com/watch?v=LlkJvoybDoU
-- 
+- netshell / laravel paypal
+
+## Stripe:
+	- with php: https://www.youtube.com/watch?v=CeufP46S5BI&list=PLy1nL-pvL2M6cUbiHrfMkXxZ9j9SGBxFE
 
 ## HTTP/Client
 - video : https://www.youtube.com/watch?v=6PZg6ht8yyc
 - documtation : https://laravel.com/docs/8.x/http-client
+
+
+## cURL error 60: SSL certificate problem: 
+- Download the certificate bundle. https://curl.se/docs/caextract.html
+- Put it inside of C:\wamp64\bin\php\your-php-version\extras\ssl
+- Make sure the file mod_ssl.so is inside of C:\wamp64\bin\apache\apache(version)\modules
+- Enable mod_ssl in httpd.conf inside of Apache directory C:\wamp64\bin\apache\apache2.4.27\conf
+- Enable php_openssl.dll in php.ini. Be aware my problem was that I had two php.ini files and I need to do this in both of them.
+https://stackoverflow.com/questions/29822686/curl-error-60-ssl-certificate-unable-to-get-local-issuer-certificate
+
+## install xamp:
+- change mysql port to 3007 in phpmyadmin, php.ini
+- copy past the project from wamp to xamp
+- composer install
+- php artisan key:generate
+- php artisan cache:clear
+- php artisan migrate
+- php artisan storage:link
+
+- add data to db

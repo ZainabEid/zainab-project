@@ -22,8 +22,8 @@ class PaymentController extends Controller
         // set middleware
         $this->middleware('auth:web');
        
-        //Bring Fatoora services
-        $this->payment = $payment;
+        //Bring payment service
+        $this->payment = new  $payment;
 
     } // end of constructor
 
@@ -37,60 +37,27 @@ class PaymentController extends Controller
             return redirect()->back()->with('error', 'There is no product yet');
         }
 
-        $data = $this->payment->getInvoiceLink( 'Lnk',session()->get('total_price'),Auth::user()->name);
+        $InvoiceURL = $this->payment->getInvoiceLink( session()->get('total_price'));
 
-        $invoiceId   = $data->InvoiceId;
-        $paymentLink = $data->InvoiceURL;
-
-        return view('site.payment.invoice-link', compact('invoiceId', 'paymentLink'));
+        return view('site.payment.invoice-link', compact('InvoiceURL'));
     } // end of  check out
 
 
-    // return checkout page
-    public function checkout()
+    public function pay()
     {
+        $products = session('cart');
 
-        $cart = session()->get('cart');
+        $this->paymentLink = $this->payment->pay($products ,route('site.payment.returnback.success'),route('site.payment.returnback.error'));
 
-        if (!isset($cart)) {
-            return redirect()->back()->with('error', 'there is no product yet');
-        }
-
-        $paymentMethods = $this->payment->getPaymentMethod(session()->get('total_price'),'KWD');
-
-        // call init payment 
-        return view('site.payment.checkout', compact('paymentMethods'));
-    } // end of  check out
-
-
-    public function pay(Request $request)
-    {
-        
-        $request->validate([
-            'PaymentMethodId' => 'required',
-        ]);
-
-        $data = $this->payment->getPaymentLink(
-            $request->PaymentMethodId, session()->get('total_price') ,
-            route('site.payment.returnback.success'),
-            route('site.payment.returnback.error')
-        );
-
-        //You can save payment data in database as per your needs
-        $this->invoiceId   = $data->InvoiceId;
-        $this->paymentLink = $data->PaymentURL;
-
-        session()->put('invoiceId', $this->invoiceId);
-        session()->put('paymentLink', $this->paymentLink);
-
+        // save payment link in db
         $user = User::findOrFail(Auth::id());
-        $user->orders()->create([
+        $order = $user->orders()->create([
             'isPaid' => false,
-            'invoiceId' => $this->invoiceId,
-            'paymentLink' => $this->paymentLink,
         ]);
 
-        return view('site.payment.invoice-link', ['invoiceId' =>  $this->invoiceId, 'paymentLink' =>  $this->paymentLink]);
+        session()->put('order_id', $order->id );
+
+        return view('site.payment.pay', ['paymentLink' =>  $this->paymentLink]);
     }// end of pay
 
     
@@ -98,15 +65,9 @@ class PaymentController extends Controller
 
     public function returnbackSuccess(Request $request)
     {
-        $Data = $this->payment->getPaymentCallBack($request);
-
-        if($Data->InvoiceStatus != "Paid"){
-            return;
-        }
-
         // save order to db
         $user = User::findOrFail(Auth::id());
-        $user->orders()->where('invoiceId',  session('invoiceId'))->update([
+        $user->orders()->where('order_id',  session('order_id'))->update([
             'isPaid' => true,
         ]);
 
@@ -121,29 +82,18 @@ class PaymentController extends Controller
 
     public function returnBackError(Request $request)
     {
-       $error="";
-
-        $Data = $this->payment->getPaymentCallBack($request);
-
-        if ( $Data->InvoiceStatus  == "Pending" ){
-
-            foreach($Data->InvoiceTransactions as $transaction){
-                if($transaction->PaymentId == $request->paymentId ){
-                    $error = $transaction->Error;
-                    break;
-                }
-            }
-            
-        }
+    
 
         // save order to db
         $user = User::findOrFail(Auth::id());
 
-        $user->orders()->where('invoiceId',  session('invoiceId') )->update([
+        $user->orders()->where('order_id',  session('order_id') )->update([ // need to use order_id instead of invoice id
             'isPaid' => false,
         ]);
 
-        return redirect()->route('site.cart')->with('error', $error);
+        $error = $this->payment->handleErrors($request);
+
+        return redirect()->route('site.cart')->with('error', 'payment faild pleas try again');
     }// end of returnbackError
 
 }

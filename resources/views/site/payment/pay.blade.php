@@ -7,14 +7,14 @@
 				<main id="main" class="site-main">
 				<article id="post-39" class="post-39 page type-page status-publish hentry">
 				<header class="entry-header">
-				<h1 class="entry-title">Invoice Link Page</h1>
+				<h1 class="entry-title">Go To Payment Link Page</h1>
 				</header>
 				<!-- .entry-header -->
 				<div class="entry-content">
 					<div class="">
-						<h4>InvoiceLink</h4>						
+						<h4>Payment Link</h4>						
 						<div>								
-                            "Click on <a href='{{ $InvoiceURL }}' target='_blank'>{{ $InvoiceURL }}</a>."
+                            "Click on <a href='{{ $paymentLink }}' target='_blank'>{{ $paymentLink }}</a>."
 						</div>
 					</div>
 				</div>

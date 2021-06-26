@@ -20,7 +20,6 @@ class Payment extends Model
                 'shipping_id'
     ];
 
-
      ########### start relations #########
      public function user()
      {

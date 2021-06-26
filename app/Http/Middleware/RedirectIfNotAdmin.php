@@ -33,9 +33,9 @@ class RedirectIfNotAdmin
         }
 
 
-        throw new AuthenticationException(
-            'Unauthenticated.', [$guard], route('admin.login')
-        );
+        // throw new AuthenticationException(
+        //     'Unauthenticated.', [$guard], route('admin.login')
+        // );
     }
 
 }

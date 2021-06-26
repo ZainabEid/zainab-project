@@ -4,6 +4,7 @@ namespace App\Services\Payment;
 
 use App\Services\Payment\Contract\PaymentInterface;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class FatoorahServices implements PaymentInterface
 {
@@ -14,72 +15,95 @@ class FatoorahServices implements PaymentInterface
     public function __construct()
     {
         // fatoorah api configrations
-        $this->apiURL = 'ARVtcZetyA8oRfMQm_Da4gt7LBa33cHSUFSkHKnhQlmQOZhgR-Jqrc7AEikRGzP99I3rz_PzsAn4OUIK';
+        $this->apiURL = config('app.API_URL');
         $this->apiKey = config('app.API_KEY');
     }
 
 
-    public  function getInvoiceLink($NotificationOption, $InvoiceValue, $CustomerName)
+    public  function getInvoiceLink($total)
     {
-
         // collect invoice data
         $postFields = [
-            'NotificationOption' => $NotificationOption, //'SMS', 'EML', or 'ALL'
-            'InvoiceValue'       => $InvoiceValue,
-            'CustomerName'       => $CustomerName,
+            'NotificationOption' => 'Lnk', //'SMS', 'EML', or 'ALL'
+            'InvoiceValue'       => $total,
+            'CustomerName'       => Auth::user()->name,
         ];
 
         //Call endpoint
         $data = $this->sendPayment($this->apiURL, $this->apiKey, $postFields);
 
         //returned links
-
-        return [
-            'invoiceId' => $data->InvoiceId,
-            'paymentLink' => $data->paymentLink, // error
-        ];
+        return $data->InvoiceURL;   
     }
 
+    function calculatetotal($products){
+        return session()->get('toatl_price');
+    }
 
-    public  function getPaymentMethod($InvoiceAmount, $CurrencyIso)
+    public  function pay($products,$success_url,$error_url)
     {
 
-        //Fill POST fields array
-        $ipPostFields = [
-            'InvoiceAmount' => $InvoiceAmount,
-            'CurrencyIso'   => $CurrencyIso
-        ];
-
-        //Call endpoint
-        $paymentMethods = $this->initiatePayment($this->apiURL, $this->apiKey, $ipPostFields);
-
-        return  $paymentMethods;
-    } // end of get payment method
-
-
-
-    public  function getPaymentLink(
-        $PaymentMethodId,
-        $InvoiceValue,
-        $CallBackUrl = "route('site.payment.CallBack')",
-        $ErrorUrl = "route('site.payment.CallBack')") 
-    {
+        $total = $this->calculatetotal($products);
 
         $postFields = [
             //Fill required data
-            'paymentMethodId' => $PaymentMethodId,
-            'InvoiceValue'    => $InvoiceValue,
-            'CallBackUrl'     => $CallBackUrl,
-            'ErrorUrl'        => $ErrorUrl,
+            'paymentMethodId' => 1, // Knet by default
+            'InvoiceValue'    => $total,
+            'CallBackUrl'     => $success_url,
+            'ErrorUrl'        => $error_url,
         ];
 
 
         //Call endpoint
         $data = $this->executePayment($this->apiURL, $this->apiKey, $postFields);
-        return $data;
-    } // end of get payment link
 
 
+        return $data->PaymentURL; // returns url to pay
+    } // end of pay
+
+
+    function handleErrors($request)
+    {
+
+        $error="";
+
+        $Data = $this->getPaymentCallBack($request);
+
+        if ( $Data->InvoiceStatus  == "Pending" ){
+
+            foreach($Data->InvoiceTransactions as $transaction){
+                if($transaction->PaymentId == $request->paymentId ){
+                    $error = $transaction->Error;
+                    break;
+                }
+            }
+            
+        }
+
+        return  $error;
+    }// end of handle errors
+
+     ### not used ###
+     public  function getPaymentMethod()
+     {
+ 
+         //Fill POST fields array
+         $ipPostFields = [
+             'InvoiceAmount' => session()->get('total_price'),
+             'CurrencyIso'   => 'KWD'
+         ];
+ 
+         //Call endpoint
+         $paymentMethods = $this->initiatePayment($this->apiURL, $this->apiKey, $ipPostFields);
+ 
+         
+         return view('site.payment.checkout', compact('paymentMethods')); // redirect to the pay method in the service classe  with the paymentmedthod id
+         
+         
+     } // end of get payment method
+ 
+    
+     ### used in handle errors ###
     public  function getPaymentCallBack(Request $request)
     {
 
@@ -93,6 +117,7 @@ class FatoorahServices implements PaymentInterface
     } // end of get payment data
 
 
+     ### not used in controller ###
     public function getPaymentStatus($keyId, $KeyType = 'paymentId')
     {
         // to return inProgress make Type invoiceId
