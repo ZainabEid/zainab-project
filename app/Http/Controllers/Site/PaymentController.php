@@ -56,7 +56,6 @@ class PaymentController extends Controller
         ]);
 
         session()->put('order_id', $order->id );
-        // dd(filter_var($this->paymentLink, FILTER_VALIDATE_URL));
 
         return view('site.payment.pay', ['paymentLink' =>  $this->paymentLink]);
     }// end of pay
@@ -68,7 +67,7 @@ class PaymentController extends Controller
     {
         // save order to db
         $user = User::findOrFail(Auth::id());
-        $user->orders()->where('order_id',  session('order_id'))->update([
+        $user->orders()->where('id',  session('order_id'))->update([
             'isPaid' => true,
         ]);
 
@@ -83,12 +82,10 @@ class PaymentController extends Controller
 
     public function returnBackError(Request $request)
     {
-    
-
         // save order to db
         $user = User::findOrFail(Auth::id());
 
-        $user->orders()->where('order_id',  session('order_id') )->update([ 
+        $user->orders()->where('id',  session('order_id') )->update([ 
             'isPaid' => false,
         ]);
 
