@@ -70,24 +70,21 @@ class StripeServices implements PaymentInterface
     
 
       /***********************************/
-    // return invoice pf paid , return 
+    // return invoice with status: paid , return 
     public function charge($total)
     {
 
-        ## using laravel cashier
         $user = User::find(Auth::id());
 
-        // if user is not acustomer or has no payment methods attached
+        // if user is not a customer or has no payment methods attached
         if( ! $user->defaultPaymentMethod()){
             $this->handlePaymenRequirements( $user);
         }
-        // dd($user->defaultPaymentMethod());
-        
 
         try {
             $payment =  $user->invoiceFor('Total Payment', $total*100 ); // returns stripe-invoce with status :paid
 
-            // dd( $payment->hosted_invoice_url);
+            
             return $payment->hosted_invoice_url;
 
         } catch (Exception $e) {
@@ -99,18 +96,33 @@ class StripeServices implements PaymentInterface
     }
 
 
+    // return paid link 
     public function checkout($products,$success_url,$error_url)
     {
         // find or create products to stripe
         // get array of product_prices and quantities [product_price_id => quantity]
 
+        $product_price_list =[];
+
+        foreach($products as $product){
+            // check if product exists
+
+            $product_price= $this->stripe->prices->create([
+                'unit_amount' => $product['price'] *100,
+                'currency' => 'AED',
+                'product_data' => [
+                    'name' => $product['name'],
+                ],
+            ]);
+              
+            $product_price_list += [$product_price->id => $product['quantity']];
+        }
+
+        
         $user = User::find(Auth::id());
         try{
             $checkout = $user->checkout(
-                [
-                    'price_1J6DyPIVdWaeh4NoUZeiByjX',
-                    'price_1J6Xg3IVdWaeh4NokmGho38P'
-                ],
+                $product_price_list,
                 [
                     'success_url' => $success_url,
                     'cancel_url' => $error_url,
@@ -118,6 +130,7 @@ class StripeServices implements PaymentInterface
             );
 
         }catch(Exception $e){
+            // handle the error
             throw $e;
         }
        
